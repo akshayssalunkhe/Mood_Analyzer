@@ -1,14 +1,14 @@
 public class MoodAnalyzer {
-   //DECLARING FIELDS
-    String message="";
+    //DECLARING FIELDS
+    String message = "";
 
     //DEFAULT CONSTRUCTOR
     public MoodAnalyzer() {
-   }
+    }
 
-   //PARAMETRISED CONSTRUCTOR
-   public MoodAnalyzer(String message) {
-        this.message=message;
+    //PARAMETRISED CONSTRUCTOR
+    public MoodAnalyzer(String message) {
+        this.message = message;
     }
 
     //MAIN METHOD
@@ -18,9 +18,13 @@ public class MoodAnalyzer {
 
     //METHOD TO ANALYZE MESSAGE
     public String analyzeMood() {
-        if (message.contains("Sad")) {
-            return "SAD";
-        } else {
+        try {
+            if (message.contains("Sad")) {
+                return "SAD";
+            } else {
+                return "HAPPY";
+            }
+        } catch (Exception e) {
             return "HAPPY";
         }
     }
