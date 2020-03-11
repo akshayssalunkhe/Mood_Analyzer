@@ -1,5 +1,5 @@
 public class MoodAnalyzer {
-    //DECLARING FIELDS
+    //DECLARING FIELD
     String message = "";
 
     //DEFAULT CONSTRUCTOR
@@ -16,16 +16,24 @@ public class MoodAnalyzer {
         System.out.println("Welcome To Mood Analyzer Problem");
     }
 
+    //PARAMETRISED METHOD
+    public String analyzeMood(String message) throws MoodAnalysisException {
+        this.message=message;
+        return analyzeMood();
+    }
+
     //METHOD TO ANALYZE MESSAGE
-    public String analyzeMood() {
+    public String analyzeMood() throws MoodAnalysisException {
         try {
-            if (message.contains("Sad")) {
+            if ( message.length() == 0 )
+                throw new MoodAnalysisException( MoodAnalysisException.ExceptionType.EMPTY , "Please Enter Valid Mood " );
+            if ( message.contains("Sad") ) {
                 return "SAD";
             } else {
                 return "HAPPY";
             }
-        } catch (Exception e) {
-            return "HAPPY";
+        } catch ( NullPointerException e ) {
+            throw new MoodAnalysisException( MoodAnalysisException.ExceptionType.NULL , "Please Enter Valid Mood" );
         }
     }
 }
