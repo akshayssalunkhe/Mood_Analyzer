@@ -4,45 +4,55 @@ import org.junit.Test;
 public class MoodAnalyzerTest {
     @Test
     public void giveMessage_WhenSad_ThenReturnSad() {
-        MoodAnalyzer moodAnalyzer=new MoodAnalyzer("I am in Sad Mood");
+        MoodAnalyzer moodAnalyzer = new MoodAnalyzer("I am in Sad Mood");
         String mood = null;
         try {
             mood = moodAnalyzer.analyzeMood();
         } catch (MoodAnalysisException e) {
             e.printStackTrace();
         }
-        Assert.assertEquals("SAD",mood);
+        Assert.assertEquals("SAD", mood);
     }
 
     @Test
     public void giveMessage_WhenNotSad_ThenReturnHappy() {
-        MoodAnalyzer moodAnalyzer=new MoodAnalyzer("I am in Happy Mood");
+        MoodAnalyzer moodAnalyzer = new MoodAnalyzer("I am in Happy Mood");
         String mood = null;
         try {
             mood = moodAnalyzer.analyzeMood();
         } catch (MoodAnalysisException e) {
             e.printStackTrace();
         }
-        Assert.assertEquals("HAPPY",mood);
+        Assert.assertEquals("HAPPY", mood);
     }
 
     @Test
     public void giveMessage_WhenInputIsNull_ThenThrowException() {
-        MoodAnalyzer moodAnalyzer=new MoodAnalyzer();
-        try{
+        MoodAnalyzer moodAnalyzer = new MoodAnalyzer();
+        try {
             moodAnalyzer.analyzeMood(null);
-        }catch ( MoodAnalysisException e ){
-            Assert.assertEquals(MoodAnalysisException.ExceptionType.NULL,e.type);
+        } catch (MoodAnalysisException e) {
+            Assert.assertEquals(MoodAnalysisException.ExceptionType.NULL, e.type);
         }
     }
 
     @Test
     public void giveMessage_WhenInputIsEmpty_ThenThrowException() {
-        MoodAnalyzer moodAnalyzer=new MoodAnalyzer();
-        try{
+        MoodAnalyzer moodAnalyzer = new MoodAnalyzer();
+        try {
             moodAnalyzer.analyzeMood("");
-        }catch ( MoodAnalysisException e ){
-            Assert.assertEquals(MoodAnalysisException.ExceptionType.EMPTY,e.type);
+        } catch (MoodAnalysisException e) {
+            Assert.assertEquals(MoodAnalysisException.ExceptionType.EMPTY , e.type);
+        }
+    }
+
+    @Test
+    public void giveMoodAnalyserClass_WhenProper_ShouldReturnObject() {
+        try {
+            MoodAnalyzer moodAnalyzer = MoodAnalyserFactory.createMoodAnalyser();
+            Assert.assertEquals(new MoodAnalyzer(),moodAnalyzer);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

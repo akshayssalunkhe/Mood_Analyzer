@@ -36,4 +36,11 @@ public class MoodAnalyzer {
             throw new MoodAnalysisException( MoodAnalysisException.ExceptionType.NULL , "Please Enter Valid Mood" );
         }
     }
+
+    //CHECKING TWO OBJECTS ARE EQUAL OR NOT
+    public boolean equals (Object another) {
+        if (this.message.equals(((MoodAnalyzer) another).message))
+            return true;
+        return false;
+    }
 }
