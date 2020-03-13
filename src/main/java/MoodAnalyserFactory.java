@@ -43,6 +43,7 @@ public class MoodAnalyserFactory {
         return null;
     }
 
+    //METHOD TO SET FIELD VALUES
     public static void setFieldValue(Object result, String fieldName, String fieldValue) throws MoodAnalysisException {
         try {
             if (fieldValue == null) {
