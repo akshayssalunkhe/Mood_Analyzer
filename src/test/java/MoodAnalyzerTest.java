@@ -133,4 +133,43 @@ public class MoodAnalyzerTest {
             Assert.assertEquals(MoodAnalysisException.ExceptionType.NO_SUCH_METHOD_FOUND, e.type);
         }
     }
+
+    @Test
+    public void setMessageWithReflection_WhenProper_ShouldReturnHappy() {
+        try {
+            Constructor<?> constructor = MoodAnalyserFactory.getConstructor("MoodAnalyzer", String.class);
+            Object result = MoodAnalyserFactory.createMoodAnalyser(constructor, "");
+            MoodAnalyserFactory.setFieldValue(result, "message", "I am in Happy Mood");
+            Object mood = MoodAnalyserFactory.invokeMethod(result, "analyzeMood");
+            Assert.assertEquals("HAPPY", mood);
+        } catch (MoodAnalysisException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void setMessageWithReflection_WhenImproperField_ShouldThrowException() {
+        try {
+            Constructor<?> constructor = MoodAnalyserFactory.getConstructor("MoodAnalyzer", String.class);
+            Object result = MoodAnalyserFactory.createMoodAnalyser(constructor, "");
+            MoodAnalyserFactory.setFieldValue(result, "messge", "I am in happy mood");
+            Object mood = MoodAnalyserFactory.invokeMethod(result, "analyzeMood");
+            Assert.assertEquals("HAPPY", mood);
+        } catch (MoodAnalysisException e) {
+            Assert.assertEquals(MoodAnalysisException.ExceptionType.NO_SUCH_FIELD_FOUND, e.type);
+        }
+    }
+
+    @Test
+    public void setMessageWithReflection_WhenNull_ShouldThrowException() {
+        try {
+            Constructor<?> constructor = MoodAnalyserFactory.getConstructor("MoodAnalyzer", String.class);
+            Object result = MoodAnalyserFactory.createMoodAnalyser(constructor, "");
+            MoodAnalyserFactory.setFieldValue(result, "message", null);
+            Object mood = MoodAnalyserFactory.invokeMethod(result, "analyzeMood");
+            Assert.assertEquals("HAPPY", mood);
+        } catch (MoodAnalysisException e) {
+            Assert.assertEquals(MoodAnalysisException.ExceptionType.NULL, e.type);
+        }
+    }
 }
