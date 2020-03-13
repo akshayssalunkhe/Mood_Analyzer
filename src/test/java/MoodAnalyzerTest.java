@@ -83,8 +83,8 @@ public class MoodAnalyzerTest {
         try {
             MoodAnalyzer moodAnalyzer1 = new MoodAnalyzer("I am in Happy Mood");
             Constructor<?> constructor = MoodAnalyserFactory.getConstructor("MoodAnalyzer", String.class);
-            Object result1 = MoodAnalyserFactory.createMoodAnalyser(constructor, "I am in Happy Mood");
-            Assert.assertEquals(moodAnalyzer1, result1);
+            Object result = MoodAnalyserFactory.createMoodAnalyser(constructor, "I am in Happy Mood");
+            Assert.assertEquals(moodAnalyzer1, result);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -108,6 +108,29 @@ public class MoodAnalyzerTest {
             MoodAnalyserFactory.createMoodAnalyser(constructor, "I am in happy mood");
         } catch (MoodAnalysisException e) {
             Assert.assertEquals(MoodAnalysisException.ExceptionType.NO_SUCH_CLASS_FOUND, e.type);
+        }
+    }
+
+    @Test
+    public void givenHappyMessage_WhenProper_ShouldReturnHappyMood() {
+        try {
+            Constructor<?> constructor = MoodAnalyserFactory.getConstructor("MoodAnalyzer", String.class);
+            Object result = MoodAnalyserFactory.createMoodAnalyser(constructor, "I am in happy mood");
+            Object mood = MoodAnalyserFactory.invokeMethod(result, "analyzeMood");
+            Assert.assertEquals("HAPPY", mood);
+        } catch (MoodAnalysisException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void givenHappyMessage_WhenImproper_ShouldThrowException() {
+        try {
+            Constructor<?> constructor = MoodAnalyserFactory.getConstructor("MoodAnalyzer", String.class);
+            Object result = MoodAnalyserFactory.createMoodAnalyser(constructor, "I am in happy mood");
+            MoodAnalyserFactory.invokeMethod(result, "analyzeMod");
+        } catch (MoodAnalysisException e) {
+            Assert.assertEquals(MoodAnalysisException.ExceptionType.NO_SUCH_METHOD_FOUND, e.type);
         }
     }
 }
