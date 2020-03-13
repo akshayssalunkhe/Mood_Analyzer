@@ -1,5 +1,6 @@
 import org.junit.Assert;
 import org.junit.Test;
+
 import java.lang.reflect.Constructor;
 
 public class MoodAnalyzerTest {
@@ -72,6 +73,39 @@ public class MoodAnalyzerTest {
     public void givenClassName_WhenImproper_ShouldThrowException() {
         try {
             MoodAnalyserFactory.getConstructor("MoodAnalyser", String.class);
+        } catch (MoodAnalysisException e) {
+            Assert.assertEquals(MoodAnalysisException.ExceptionType.NO_SUCH_CLASS_FOUND, e.type);
+        }
+    }
+
+    @Test
+    public void givenMoodAnalyserClass_WhenProper_ThenReturnObjectForParameter() {
+        try {
+            MoodAnalyzer moodAnalyzer1 = new MoodAnalyzer("I am in Happy Mood");
+            Constructor<?> constructor = MoodAnalyserFactory.getConstructor("MoodAnalyzer", String.class);
+            Object result1 = MoodAnalyserFactory.createMoodAnalyser(constructor, "I am in Happy Mood");
+            Assert.assertEquals(moodAnalyzer1, result1);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void givenMethodName_WhenImproper_ShouldThrowExceptionForParameter() {
+        try {
+            Constructor<?> constructor = MoodAnalyserFactory.getConstructor("MoodAnalyzer", Integer.class);
+            ;
+            MoodAnalyserFactory.createMoodAnalyser(constructor, "I am in Happy Mood");
+        } catch (MoodAnalysisException e) {
+            Assert.assertEquals(MoodAnalysisException.ExceptionType.NO_SUCH_METHOD_FOUND, e.type);
+        }
+    }
+
+    @Test
+    public void givenClassName_WhenImproper_ShouldThrowExceptionForParameter() {
+        try {
+            Constructor<?> constructor = MoodAnalyserFactory.getConstructor("MoodAnalyzer", String.class);
+            MoodAnalyserFactory.createMoodAnalyser(constructor, "I am in happy mood");
         } catch (MoodAnalysisException e) {
             Assert.assertEquals(MoodAnalysisException.ExceptionType.NO_SUCH_CLASS_FOUND, e.type);
         }
