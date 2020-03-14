@@ -94,7 +94,6 @@ public class MoodAnalyzerTest {
     public void givenMethodName_WhenImproper_ShouldThrowExceptionForParameter() {
         try {
             Constructor<?> constructor = MoodAnalyserFactory.getConstructor("MoodAnalyzer", Integer.class);
-            ;
             MoodAnalyserFactory.createMoodAnalyser(constructor, "I am in Happy Mood");
         } catch (MoodAnalysisException e) {
             Assert.assertEquals(MoodAnalysisException.ExceptionType.NO_SUCH_METHOD_FOUND, e.type);
